@@ -46,3 +46,29 @@
     }
 
 }
+
+
+//solution-2
+import java.util.Collections;
+import java.util.PriorityQueue;
+public class Solution {
+    public static int[] getSecondOrderElements(int n, int []a) {
+        // Write your code here.
+        
+        PriorityQueue<Integer> pq_min = new PriorityQueue<>();  //for kth largest
+        PriorityQueue<Integer> pq_max = new PriorityQueue<>(Collections.reverseOrder()); //for kth smallest
+        
+        for(int i=0 ;i<a.length ;i++){
+            pq_min.add(a[i]);
+            pq_max.add(a[i]);
+            
+            if(pq_min.size()>2) pq_min.poll();
+            if(pq_max.size()>2) pq_max.poll();
+            
+        }
+        
+        return new int[]{pq_min.poll() , pq_max.poll()};
+        
+    }
+
+}
