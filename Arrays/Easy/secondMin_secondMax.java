@@ -1,4 +1,33 @@
-//#solution -1
+//#solution -1 brute force
+   
+import java.util.*;
+public class Solution {
+    public static int[] getSecondOrderElements(int n, int []a) {
+        // Write your code here.
+        
+        Arrays.sort(a);
+        int secondMax = a[n-1];
+        for(int i=n-2 ;i>=0 ;i--){
+            if(a[i]!=secondMax){
+                secondMax = a[i];
+                break;
+            }
+        }
+        int secondMin =a[0];
+        for(int i=1 ;i<a.length ;i++){
+            if(a[i]!=secondMin) {
+                secondMin = a[i];
+                break;
+            }
+        }
+        
+        return new int[]{secondMax , secondMin};
+        
+    }
+
+}
+
+//solution -2
   public class Solution {
     public static int[] getSecondOrderElements(int n, int []a) {
         // Write your code here.
@@ -48,7 +77,7 @@
 }
 
 
-//solution-2
+//solution-3 wont work if duplicates
 import java.util.Collections;
 import java.util.PriorityQueue;
 public class Solution {
