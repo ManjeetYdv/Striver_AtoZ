@@ -5,13 +5,11 @@ import java.util.*;
 class TUF{
 
 public static int[] RearrangebySign(int[] A, int n){
-    
-  // Define 2 vectors, one for storing positive 
-  // and other for negative elements of the array.
+
+    //BRUTE FORCE
   ArrayList<Integer> pos=new ArrayList<>();
   ArrayList<Integer> neg=new ArrayList<>();
-  
-  // Segregate the array into positives and negatives.
+
   for(int i=0;i<n;i++){
       
       if(A[i]>0) pos.add(A[i]);
@@ -24,10 +22,29 @@ public static int[] RearrangebySign(int[] A, int n){
       A[2*i] = pos.get(i);
       A[2*i+1] = neg.get(i);
   }
+    return A;
+}  
 
- 
-  return A;
-}    
+    //optimal
+    public int[] rearrangeArray(int[] nums) {
+        
+        int[]res = new int[nums.length];
+        int pos=0; //all positives at even indexes
+        int neg =1; //all negatives at off indexes
+        
+        for(int i=0 ;i<nums.length ;i++){
+            if(nums[i]>0) {
+                res[pos] = nums[i];
+                pos+=2;
+            }
+            else {
+                res[neg] = nums[i];
+                neg+=2;
+            }
+        }
+        return res;
+    }
+    
 
 public static void main(String args[]) 
 {
