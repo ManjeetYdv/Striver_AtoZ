@@ -1,36 +1,37 @@
-class Solution {
+import java.util.*;
+
+public class next_permutation {
+
     public void nextPermutation(int[] nums) {
-        boolean swap=false;
-        
-        for(int i=nums.length-1 ;i>0 ;i--)
-        {
-            if(nums[i-1]<nums[i]){
-                swap = true;
-                int ele = nums[i-1];
-                int just_greater_ele = nums[i];
-                int just_greater_idx =i;
-                for(int j=i ;j<nums.length ;j++){
-                    if(nums[j]>ele && nums[j]<=just_greater_ele){
-                        just_greater_ele =nums[j];
-                        just_greater_idx =j;
-                    }
-                }
-                
-                int temp = nums[just_greater_idx];
-                nums[just_greater_idx] = ele;
-                nums[i-1] = temp;
-                 
-                //reverse from i to last
-                reverse(nums , i , nums.length-1);
-                
+
+        int idx =-1; //breakpoint
+        int n=nums.length;
+
+        for(int i=n-2 ;i>=0 ;i--){ //finding breakpoint
+            if(nums[i]<nums[i+1]) {
+                idx =i;
                 break;
             }
         }
-        
-        if(!swap) reverse(nums , 0 , nums.length-1);
-    }
+        if(idx==-1){ //array is at last permutations or eg , 4331  , so next permuation will be reverse of it i.e 1234
+            reverse(nums , 0 , n-1);
+            return;
+        }
 
-      public static void reverse(int []nums , int start , int end){
+        for(int i=n-1 ; i>idx ;i--){ // finding least greater element than breakpoint and swapping them
+            if(nums[i]>nums[idx]){
+                int temp = nums[idx];
+                nums[idx] = nums[i];
+                nums[i] =temp;
+                break;
+            }
+        }
+
+        //reversing array ahead of idx
+        reverse(nums , idx+1, n-1);
+
+    }
+    public static void reverse(int []nums , int start , int end){
         while(start<end){
             int temp = nums[start];
             nums[start] = nums[end];
@@ -39,4 +40,11 @@ class Solution {
             end--;
         }
     }
+
+
+    public static void main(String[] args) {
+       int []arr = {5,5,4,3,2,1};
+        //System.out.println(longestSuccessiveElements(arr));
+    }
 }
+
