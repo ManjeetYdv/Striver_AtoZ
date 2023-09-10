@@ -14,8 +14,7 @@ public class Main {
     }
 
     public static ArrayList<Integer> RearrangebySign(ArrayList<Integer> A, int n) {
-        // Define 2 ArrayLists, one for storing positive 
-        // and other for negative elements of the array.
+
         ArrayList<Integer> pos = new ArrayList<>();
         ArrayList<Integer> neg = new ArrayList<>();
 
