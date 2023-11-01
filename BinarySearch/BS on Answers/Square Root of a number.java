@@ -10,20 +10,25 @@ public class Solution {
 		 */
 		long low =1;
         long high = N;
-        long prev = 0;
-        while(low<=high){
-
-            long mid = (low+high)/2;
-            long squared = mid*mid;
-            if(squared == N) return (int)mid;
-            if(squared>N) high = mid-1;
-            else{
-				low = mid+1;
-				prev=mid;
-			} 
-        }
-        
-        return (int)prev;
+    //     long ans=0;
+    //     while(low<=high){
+    //        long mid =(low+high)/2;
+    //        long square = mid*mid;
+    //        if(square<=N) {
+    //            ans = mid;
+    //            low =mid+1;
+    //        }
+    //        else high = mid-1;
+    //    }
+    //    return (int)ans;
+     
+       while(low<=high){
+           long mid =(low+high)/2;
+           long square = mid*mid;
+           if(square<=N) low =mid+1;
+           else high = mid-1;
+       }
+       return (int)high;
 		 
 	}
 }
