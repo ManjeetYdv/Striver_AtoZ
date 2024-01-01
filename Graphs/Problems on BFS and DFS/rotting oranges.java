@@ -14,44 +14,39 @@ class Solution {
     public boolean isValid(int i ,int j , int m , int n){
         return i>=0 && j>=0 && i<m && j<n;
     }
-    public int bfs(int[][]grid , Queue<cell> queue  ,int m , int n) {
-      int time=0;
-      while(!queue.isEmpty()){
-          cell rotten = queue.poll();
-          int row = rotten.row;
-          int col = rotten.col;
-          int t = rotten.minutes;
-          time =t;
-          
-          for(int []d : directions){
-              int nrow=row+d[0];
-              int ncol=col+d[1];
-              if(isValid(nrow , ncol , m ,n) && grid[nrow][ncol]==1){
-                  grid[nrow][ncol]=2;
-                  queue.add(new cell(nrow ,ncol , time+1));
-              }
-          }
-      }
-      return time;
-    }
+   
     public int orangesRotting(int[][] grid) {
         Queue<cell> queue = new LinkedList<>();
         int m=grid.length;
         int n=grid[0].length;
-        
+        int fresh_count=0;
         for(int i=0 ;i<m ;i++){
             for(int j=0;j<n ;j++){
                 if(grid[i][j]==2) queue.add(new cell(i , j ,0));
+                else if(grid[i][j]==1) fresh_count++;
+            }
+        }
+
+        int time=0;
+        while(!queue.isEmpty()){
+            cell rotten = queue.poll();
+            int row = rotten.row;
+            int col = rotten.col;
+            int t = rotten.minutes;
+            time =t;
+
+            for(int []d : directions){
+                int nrow=row+d[0];
+                int ncol=col+d[1];
+                if(isValid(nrow , ncol , m ,n) && grid[nrow][ncol]==1){
+                    fresh_count--;
+                    grid[nrow][ncol]=2;
+                    queue.add(new cell(nrow ,ncol , time+1));
+                }
             }
         }
         
-        int time = bfs(grid , queue ,m , n);
-        for(int i=0 ;i<m ;i++){
-            for(int j=0 ;j<n ;j++){
-                if(grid[i][j]==1) return -1;
-            }
-        }
-        return time;
+        return fresh_count==0 ? time : -1;
         
     }
 }
