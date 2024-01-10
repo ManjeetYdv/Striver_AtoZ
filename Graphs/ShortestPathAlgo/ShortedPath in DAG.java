@@ -6,6 +6,13 @@ class Pair{
         this.weight=weight;
     }
 }
+
+
+// Finding the shortest path to a vertex is easy if you already know the shortest paths to all the vertices that can precede it. Finding the longest path to a vertex in DAG is easy if you already know the longest path to all the vertices that can precede it.
+
+// Processing the vertices in topological order ensures that by the time you get to a vertex, you've already processed all the vertices that can precede it.
+
+// Dijkstra's algorithm is necessary for graphs that can contain cycles, because they can't be topologically sorted.
 public class Solution {
     public static void topoSort(int node ,int[]vis , List<List<Pair>> adj , Stack<Integer>stack){
         vis[node]=1;
