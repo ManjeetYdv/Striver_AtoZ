@@ -68,7 +68,7 @@ class Solution {
             }
         }
         
-        //detecting negaitve cycle
+         // Nth relaxation to check negative cycle
         boolean neg = false;
          for (ArrayList<Integer> edge : edges) {
                 int s = edge.get(0);
