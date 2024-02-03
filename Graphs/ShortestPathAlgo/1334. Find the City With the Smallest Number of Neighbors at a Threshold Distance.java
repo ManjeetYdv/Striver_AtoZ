@@ -15,10 +15,9 @@ class Solution {
            for(int i=0 ;i<n ;i++){
                for(int j=0;j<n ;j++){
                    int d = mat[i][k] + mat[k][j];
-                //    if(d<=distanceThreshold && d<mat[i][j]){
-                //        mat[i][j]=d;
-                //    }
-                    mat[i][j] = Math.min(d , mat[i][j]);
+                   if(d<=distanceThreshold && d<mat[i][j]){
+                       mat[i][j]=d;
+                   }
                }
            }
        }
