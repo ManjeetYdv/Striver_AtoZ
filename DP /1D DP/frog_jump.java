@@ -1,30 +1,43 @@
+//memoization
 import java.util.* ;
 import java.io.*; 
 public class Solution { 
+    static int[]dp;
     public static int frogJump(int n, int heights[]) {
-        int []dp = new int[n];
-        Arrays.fill(dp , -1);
-        return helper(0 , heights , n , dp);
+        dp = new int[n];
+        Arrays.fill(dp ,-1);
+        return helper(n-1 ,heights);
     }
-
-    public static int helper(int idx , int[] heights , int n , int []dp){
-        if(idx==n-1) return 0;
-        if(dp[idx]!=-1) return dp[idx];
-        //one step
-        int oneStep = helper(idx+1 , heights , n ,dp);
-        oneStep+= Math.abs(heights[idx+1] -heights[idx]);
-
-        //two step
-        int twoStep;
-        if(idx+2<n){
-            twoStep = helper(idx+2 , heights , n , dp);
-            twoStep+= Math.abs(heights[idx+2] - heights[idx]);
-
+    public static int helper(int idx , int[]heights){
+        if(idx==0){
+            return 0;
         }
-        else  twoStep = Integer.MAX_VALUE;
+        if(dp[idx]!=-1) return dp[idx];
+        int minStep=Math.abs(heights[idx]-heights[idx-1]) +  helper(idx-1 , heights);
+        if(idx-2>=0) minStep = Math.min(minStep , Math.abs(heights[idx]-heights[idx-2])+ helper(idx-2 ,heights));
 
-        return dp[idx] =Integer.min(oneStep , twoStep);
-
+        return dp[idx]= minStep;
     }
+    
+}
 
+
+//tabulation
+import java.util.* ;
+import java.io.*; 
+public class Solution { 
+    
+    public static int frogJump(int n, int heights[]) {
+        int[]dp = new int[n];
+        
+        for(int i=1; i<n;i++){
+            int jumpOne=dp[i-1]+ Math.abs(heights[i]-heights[i-1]);
+            int jumpTwo = (int)1e9;
+            if(i>1) jumpTwo =dp[i-2] + Math.abs(heights[i]-heights[i-2]);
+            dp[i] = Math.min(jumpOne , jumpTwo);
+        }
+        return dp[n-1];
+    }
+    
+    
 }
