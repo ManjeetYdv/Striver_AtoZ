@@ -36,3 +36,25 @@ public class Solution {
         return dp[idx] = optimal;
     }
 }
+
+//tabulation
+import java.util.Arrays;
+public class Solution {
+     
+    public static int minimizeCost(int n, int k, int []height){
+   
+        int[]dp = new int[n];
+        for(int i=1;i<n;i++){
+            int min =(int)1e9;
+            for(int j=1;j<=k;j++){
+                if(i-j<0) break;
+                else min = Math.min(min, Math.abs(height[i]-height[i-j])+ dp[i-j]);
+            }
+            dp[i]=min; 
+        }
+        return dp[n-1];
+
+    }
+ 
+    
+}
