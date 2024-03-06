@@ -1,21 +1,26 @@
-import java.util.* ;
-import java.io.*; 
-public class Solution {
-
-	public static int help(int i , int j  , int  m  , int n , int [][]dp){
-        if(i==m-1 && j==n-1) return 1;
-        if(i>=m || j>=n ) return 0;
-        if(dp[i][j]!=-1) return dp[i][j];
-        
-        int down = help(i+1 , j , m , n , dp);
-        int up = help(i , j+1 , m ,n , dp);
-        return dp[i][j] = down+up;
-    }
-    public static int uniquePaths(int m, int n) {
-        // Write your code here.
-        int dp[][] = new int[m][n];
-        for(int a[] :dp) Arrays.fill(a , -1);
-        
-        return help(0 , 0 , m , n , dp);
+class Solution {
+    // public int helper(int m , int n ,int[][]dp){
+    //     if(m==0 && n==0) return 1;
+    //     if(dp[m][n]!=-1) return dp[m][n];
+    //     int ways=0;
+    //     if(m-1>=0) ways+=helper(m-1 ,n ,dp);
+    //     if(n-1>=0) ways+=helper(m , n-1 ,dp);
+    //     return dp[m][n]= ways;
+    // }
+    // public int uniquePaths(int m, int n) {
+    //     int[][]dp= new int[m][n];
+    //     for(int []row : dp)Arrays.fill(row ,-1);
+    //     return helper(m-1 , n-1 ,dp);
+    // }
+    public int uniquePaths(int m, int n) {
+        int[][]dp = new int[m][n];
+        dp[0][0]=1;
+        for(int i=0;i<m ;i++){
+            for(int j=0 ;j<n ;j++){
+                if(i-1>=0) dp[i][j]+=dp[i-1][j];
+                if(j-1>=0) dp[i][j]+=dp[i][j-1];
+            }
+        }
+        return dp[m-1][n-1];
     }
 }
