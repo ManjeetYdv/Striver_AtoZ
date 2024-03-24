@@ -1,25 +1,39 @@
 class Solution {
-   int[][]directions = {{1,-1},{1,0},{1,1}};
-   public int helper(int i  , int j, int n , int [][]matrix , int [][]dp){
-        if(i==n) return 0;
-        if(dp[i][j]!=Integer.MAX_VALUE) return dp[i][j];
-
-        int min=(int)1e9;
-        for(int []d : directions){
-            int nrow =i+d[0];
-            int ncol =j+d[1];
-            if(ncol<n && ncol>=0) min = Math.min(min , helper(nrow , ncol, n , matrix , dp));
-        }
-        return dp[i][j]= min+matrix[i][j];
-    }
     public int minFallingPathSum(int[][] matrix) {
-        int n=matrix.length;
-        int[][]dp = new int[n][n];
-        for(int[]row : dp) Arrays.fill(row , Integer.MAX_VALUE);
+        // int m=matrix.length;
+        // int n=matrix[0].length;
+        // int[][]dp = new int[m][n];
+        // for(int j=0 ;j<n ;j++) dp[0][j]=matrix[0][j];
 
-        int result=(int)1e9;
-        for(int i=0 ;i<n ;i++)  result = Math.min(result , helper(0 , i , n , matrix  , dp));
-        return result;
+        // for(int i=1;i<m ;i++){
+        //     for(int j=0 ;j<n ;j++){
+        //         dp[i][j] = matrix[i][j]+ dp[i-1][j];
+        //         if(j-1>=0) dp[i][j] = Math.min(dp[i][j] ,matrix[i][j]+ dp[i-1][j-1]);
+        //         if(j+1<n) dp[i][j] = Math.min(dp[i][j] , matrix[i][j]+ dp[i-1][j+1]);
+        //     }
+        // }
+        // int res=dp[m-1][0];
+        // for(int j=1;j<n ;j++) res = Math.min(res , dp[m-1][j]);
+        // return res;
+        int m=matrix.length;
+        int n=matrix[0].length;
+        int []prev = new int[n];
+        
+        for(int j=0 ;j<n ;j++) prev[j]=matrix[0][j];
+        
+        for(int i=1;i<m ;i++){
+            int []curr = new int[n];
+            for(int j=0 ;j<n ;j++){
+                curr[j] = matrix[i][j]+ prev[j];
+                if(j-1>=0) curr[j] = Math.min(curr[j] ,matrix[i][j]+ prev[j-1]);
+                if(j+1<n) curr[j] = Math.min(curr[j] , matrix[i][j]+ prev[j+1]);
+            }
+            prev=curr;
+        }
+        int res=prev[0];
+        for(int j=1;j<n ;j++) res = Math.min(res ,prev[j]);
+        return res;
+        
+    }   
 
-    }
 }
